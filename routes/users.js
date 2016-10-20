@@ -9,10 +9,10 @@ router.get('/', function (req, res) {
 router.get('/signup', function (req, res) {
   User.find({}, function (err, allUsers) {
     res.render('signup', {
-      allUsers: allUsers
+      allUsers: allUsers,
+      message: req.flash('signupMessage')
     })
   })
-  // res.render('signup')
 })
 router.get('/login', function (req, res) {
   res.render('login', {message: req.flash('loginMessage')})
