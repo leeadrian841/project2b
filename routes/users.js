@@ -18,6 +18,13 @@ router.get('/login', function (req, res) {
   res.render('login', {message: req.flash('loginMessage')})
 })
 
+
+router.post('/signup', function (req, res) {
+  User.create(req.body.user, function (err, savedUser) {
+    req.flash('signupMessage', 'New user created!')
+    res.redirect('signup')
+  })
+})
 router.post('/login', function (req, res) {
   var user = req.body.user
 
@@ -44,7 +51,10 @@ router.post('/login', function (req, res) {
 })
 
 router.get('/profile', function (req, res) {
-  res.render('profile', {message: req.flash('profileMessage')})
+  res.render('profile', {
+    message: req.flash('profileMessage'),
+    user: req.user
+  })
 })
 
 module.exports = router
