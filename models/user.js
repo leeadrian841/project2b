@@ -29,8 +29,6 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.methods.authenticate = function (givenPassword, callback) {
-  console.log('given password is ' + givenPassword)
-  console.log('saved password is ' + this.local.password)
   var hashedPassword = this.local.password
 
   bcrypt.compare(givenPassword, hashedPassword, function (err, isMatch) {
