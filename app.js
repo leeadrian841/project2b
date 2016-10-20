@@ -3,7 +3,7 @@ var app = express()
 var bodyParser = require('body-parser')
 var flash = require('connect-flash')
 var session = require('express-session')
-// var  passport = require('passport')
+var passport = require('passport')
 var dotenv = require('dotenv')
 
 var mongoose = require('mongoose')
@@ -20,8 +20,8 @@ app.use(session({
 }))
 app.use(flash())
 
-// app.use(passport.initiatize())
-// app.use(passport.session())
+app.use(passport.initiatize())
+app.use(passport.session())
 
 var usersRoutes = require('./routes/users')
 var usersAPIRoutes = require('./routes/users_api')
