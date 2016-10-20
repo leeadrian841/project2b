@@ -1,4 +1,5 @@
 <% include ./partials/header.ejs  %>
+
   <%# <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <div class="checkbox">
@@ -13,6 +14,11 @@
         <h1>Welcome to StorVault</h1>
         <h2>Easy and Simple Storage with Us!</h2>
         <p>Register with:</p>
+        <% if(message.length > 0) { %>
+          <div class="alert alert-danger">
+          <%= message %>
+          </div>
+        <% } %>
         <form class="form-horizontal" method="post" action="/signup">
           <div class="form-group">
             <label for="inputEmail" class="col-sm-2 control-label">New Email</label>
@@ -34,4 +40,5 @@
       </form>
     </div>
   </div>
+  
 <% include ./partials/footer.ejs  %>
