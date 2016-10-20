@@ -18,7 +18,17 @@ router.get('/login', function (req, res) {
   res.render('login', {message: req.flash('loginMessage')})
 })
 
-
+router.post('/signup', passport.authenticate('local'), function (req, res) {
+  User.create(req.body.user, function (err, savedUser) {
+    req.flash('signupMessage', 'New user created!')
+    res.redirect('signup')
+  })
+})
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/profile',
+  failureRedirect: '/login',
+  failureFlash: true
+}))
 router.post('/signup', function (req, res) {
   User.create(req.body.user, function (err, savedUser) {
     req.flash('signupMessage', 'New user created!')
