@@ -16,28 +16,30 @@ function authCheck (req, res, next) {
 router.get('/', function (req, res) {
   res.render('index')
 })
-router.get('/signup', function (req, res) {
-  User.find({}, function (err, allUsers) {
-    res.render('signup', {
-      allUsers: allUsers,
-      message: req.flash('signupMessage')
-    })
-  })
-})
-router.get('/login', function (req, res) {
-  res.render('login', {message: req.flash('loginMessage')})
-})
+router.route('/signup')
+      .get(authCheck, function (req, res) {
+        User.find({}, function (err, allUsers) {
+          res.render('signup', {
+            allUsers: allUsers,
+            message: req.flash('signupMessage')
+          })
+        })
+      })
+      .post(passport.authenticate('local-signup', {
+        successRedirect: '/profile',
+        failureRedirect: '/signup',
+        failureFlash: true
+      }))
 
-router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/signup',
-  failureRedirect: '/signup',
-  failureFlash: true
-}))
-router.post('/login', passport.authenticate('local-login', {
-  successRedirect: '/profile',
-  failureRedirect: '/login',
-  failureFlash: true
-}))
+router.route('/login')
+      .get(function (req, res) {
+        res.render('login', {message: req.flash('loginMessage')})
+      })
+      .post(passport.authenticate('local-login', {
+        successRedirect: '/profile',
+        failureRedirect: '/login',
+        failureFlash: true
+      }))
 // router.post('/signup', function (req, res) {
 //   User.create(req.body.user, function (err, savedUser) {
 //     req.flash('signupMessage', 'New user created!')
