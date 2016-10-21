@@ -5,7 +5,14 @@ var LocalStrategy = require('passport-local').Strategy
 
 var User = require('../models/user')
 
-
+function authCheck (req, res, next) {
+  if (req.isAuthenticated()) {
+    req.flash('signupMessage', 'You have logged in, what are you doing bruh?')
+    return res.redirect('/profile')
+  } else {
+    return next()
+  }
+}
 router.get('/', function (req, res) {
   res.render('index')
 })
@@ -71,7 +78,7 @@ router.get('/profile', function (req, res) {
 
 router.get('/logout', function (req, res) {
   req.logout()
-  res.redirect('signup')
+  res.redirect('login')
 })
 
 module.exports = router
