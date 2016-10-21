@@ -1,13 +1,13 @@
 var express = require('express')
 var router = express.Router()
 var passport = require('passport')
-var LocalStrategy = require('passport-local').Strategy
+// var LocalStrategy = require('passport-local').Strategy
 
 var User = require('../models/user')
 
 function authCheck (req, res, next) {
   if (req.isAuthenticated()) {
-    req.flash('signupMessage', 'You have logged in, what are you doing bruh?')
+    req.flash('signupMessage', 'You have already logged in.')
     return res.redirect('/profile')
   } else {
     return next()
