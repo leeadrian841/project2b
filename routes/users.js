@@ -7,7 +7,7 @@ var User = require('../models/user')
 
 function authCheck (req, res, next) {
   if (req.isAuthenticated()) {
-    req.flash('signupMessage', 'You have already logged in.')
+    req.flash('profileMessage', 'You have already logged in.')
     return res.redirect('/profile')
   } else {
     return next()
@@ -32,7 +32,7 @@ router.route('/signup')
       }))
 
 router.route('/login')
-      .get(function (req, res) {
+      .get(authCheck, function (req, res) {
         res.render('login', {message: req.flash('loginMessage')})
       })
       .post(passport.authenticate('local-login', {
