@@ -6,6 +6,8 @@ var session = require('express-session')
 var passport = require('passport')
 var dotenv = require('dotenv')
 
+var MongoStore = require('connect-mongo')(session)
+
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
@@ -16,12 +18,17 @@ app.set('view engine', 'ejs')
 app.use(session({
   secret: process.env.EXPRESS_SECRET,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: new MongoStore({
+    url: process.env.MONGO_URI,
+    autoReconnect: true
+  })
 }))
-app.use(flash())
 
-app.use(passport.initiatize())
+require('./config/passport')(passport)
+app.use(passport.initialize())
 app.use(passport.session())
+app.use(flash())
 
 var usersRoutes = require('./routes/users')
 var usersAPIRoutes = require('./routes/users_api')
