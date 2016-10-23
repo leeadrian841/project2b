@@ -4,7 +4,7 @@ var propertySchema = new mongoose.Schema({
   name: String,
   address: String,
   postal_code: Number,
-  units: Number
+  total_units: Number
 })
 
 var Property = mongoose.model('Property', propertySchema)
