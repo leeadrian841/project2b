@@ -2,6 +2,49 @@ var mongoose = require('mongoose')
 var bcrypt = require('bcrypt')
 var Schema = mongoose.Schema
 
+var tenantSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  shop_name: {
+    type: String,
+    required: true
+  },
+  unit: {
+    type: String,
+    required: true
+  },
+  contact: {
+    type: Number,
+    required: true
+  },
+  date_rented: {
+    type: Date,
+    default: Date.now
+  },
+  rent_status: {
+    enum: ['Paid', 'Owning']
+  }
+})
+var propertySchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  address: {
+    type: String,
+    required: true
+  },
+  postal_code: {
+    type: Number,
+    required: true
+  },
+  tenant: {
+    type: Schema.Types.ObjectId,
+    ref: 'Tenant'
+  }
+})
 var userSchema = new Schema({
   local: {
     email: {
@@ -11,6 +54,10 @@ var userSchema = new Schema({
     password: {
       type: String,
       required: true
+    },
+    property: {
+      type: Schema.Types.ObjectId,
+      ref: 'Property'
     }
   }
 })
@@ -37,6 +84,10 @@ userSchema.methods.authenticate = function (givenPassword, callback) {
   })
 }
 
+var Tenant = mongoose.model('Tenant', tenantSchema)
+var Property = mongoose.model('Property', propertySchema)
 var User = mongoose.model('User', userSchema)
 
+module.exports = Tenant
+module.exports = Property
 module.exports = User

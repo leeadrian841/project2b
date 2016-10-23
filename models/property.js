@@ -2,19 +2,40 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var propertySchema = new Schema({
-  name: String,
-  address: String,
-  postal_code: Number,
+  name: {
+    type: String,
+    required: true
+  },
+  address: {
+    type: String,
+    required: true
+  },
+  postal_code: {
+    type: Number,
+    required: true
+  },
   tenant: {
     type: Schema.Types.ObjectId, ref: 'Tenant'
   }
 })
 
 var tenantSchema = new Schema({
-  name: String,
-  shop_name: String,
-  unit: String,
-  contact: Number,
+  name: {
+    type: String,
+    required: true
+  },
+  shop_name: {
+    type: String,
+    required: true
+  },
+  unit: {
+    type: String,
+    required: true
+  },
+  contact: {
+    type: Number,
+    required: true
+  },
   date_rented: {
     type: Date,
     default: Date.now
