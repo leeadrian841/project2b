@@ -23,7 +23,7 @@ router.route('/signup')
         })
       })
       .post(passport.authenticate('local-signup', {
-        successRedirect: '/profile',
+        successRedirect: '/',
         failureRedirect: '/signup',
         failureFlash: true
       }))

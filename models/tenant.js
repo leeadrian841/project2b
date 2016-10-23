@@ -1,5 +1,7 @@
 var mongoose = require('mongoose')
 
+var Schema = mongoose.Schema
+
 var tenantSchema = new mongoose.Schema({
   name: String,
   shop_name: String,

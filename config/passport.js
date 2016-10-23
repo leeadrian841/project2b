@@ -19,23 +19,18 @@ module.exports = function (passport) {
     passwordField: 'user[local][password]',
     passReqToCallback: true
   }, function (req, email, password, next) {
-    User.findOne({'local.email': email}, function (err, foundUser) {
-      if (err) return next(err)
-      if (foundUser) {
-        return next(null, false, req.flash('signupMessage', 'Email has been taken!'))
-      } else {
-        var newUser = new User({
-          local: {
-            // name: name,
-            email: email,
-            password: password
-          }
-        })
-        newUser.save(function (err, newUser) {
-          if (err) throw err
-          return next(null, newUser, req.flash('signupMessage', 'New user created!'))
-        })
-      }
+    process.nextTick(function () {
+      User.findOne({'local.email': email}, function (err, foundUser) {
+        if (err) return next(err)
+        if (foundUser) {
+          return next(null, false, req.flash('signupMessage', 'Email has been taken!'))
+        } else {
+          User.create(req.body.user, function (err, newUser) {
+            if (err) throw err
+            return next(null, newUser, req.flash('signupMessage', 'New user created!'))
+          })
+        }
+      })
     })
   }))
   passport.use('local-login', new LocalStrategy({
