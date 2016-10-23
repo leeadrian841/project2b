@@ -13,9 +13,9 @@ function authCheck (req, res, next) {
     return next()
   }
 }
-router.get('/', function (req, res) {
-  res.render('index')
-})
+// router.get('/', function (req, res) {
+//   res.render('index')
+// })
 router.route('/signup')
       .get(authCheck, function (req, res) {
         User.find({}, function (err, allUsers) {
@@ -31,13 +31,13 @@ router.route('/signup')
         failureFlash: true
       }))
 
-router.route('/login')
+router.route('/')
       .get(authCheck, function (req, res) {
         res.render('login', {message: req.flash('loginMessage')})
       })
       .post(passport.authenticate('local-login', {
         successRedirect: '/profile',
-        failureRedirect: '/login',
+        failureRedirect: '/',
         failureFlash: true
       }))
 // router.post('/signup', function (req, res) {
@@ -80,7 +80,7 @@ router.get('/profile', function (req, res) {
 
 router.get('/logout', function (req, res) {
   req.logout()
-  res.redirect('login')
+  res.redirect('/')
 })
 
 module.exports = router
