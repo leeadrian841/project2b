@@ -13,9 +13,6 @@ function authCheck (req, res, next) {
     return next()
   }
 }
-// router.get('/', function (req, res) {
-//   res.render('index')
-// })
 router.route('/signup')
       .get(authCheck, function (req, res) {
         User.find({}, function (err, allUsers) {
