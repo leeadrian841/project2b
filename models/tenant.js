@@ -2,12 +2,30 @@ var mongoose = require('mongoose')
 
 var Schema = mongoose.Schema
 
-var tenantSchema = new mongoose.Schema({
-  name: String,
-  shop_name: String,
-  unit: String,
-  contact: Number,
-  rent_status: String
+var tenantSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  shop_name: {
+    type: String,
+    required: true
+  },
+  unit: {
+    type: String,
+    required: true
+  },
+  contact: {
+    type: Number,
+    required: true
+  },
+  date_rented: {
+    type: Date,
+    default: Date.now
+  },
+  rent_status: {
+    enum: ['Paid', 'Owning']
+  }
 })
 
 var Tenant = mongoose.model('Tenant', tenantSchema)
