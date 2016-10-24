@@ -5,11 +5,15 @@ var Tenant = require('../models/tenant')
 var User = require('../models/user')
 
 router.get('/', function (req, res) {
-  res.render('tenant')
+  Tenant.find({}, function (err, allTenants) {
+    res.render('tenant', {
+      allTenants: allTenants
+    })
+  })
 })
 router.post('/', function (req, res) {
   res.send(req.user)
-  Property.create(req.body.property, function (err, newProperty) {
+  Tenant.create(req.body.tenant, function (err, newTenant) {
     if (err) throw err
   })
 })

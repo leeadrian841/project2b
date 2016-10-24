@@ -1,16 +1,21 @@
 var express = require('express')
 var router = express.Router()
 
-var Property = require('../models/property')
 var User = require('../models/user')
+var Property = require('../models/user')
 
 router.get('/', function (req, res) {
-  res.render('property')
+  Property.find({}, function (err, allProperties) {
+    res.render('property', {
+      allProperties: allProperties
+    })
+  })
 })
 router.post('/', function (req, res) {
-  res.send(req.user)
-  Property.create(req.body.property, function (err, newProperty) {
-    if (err) throw err
+  User.findById(req.user._id, function (req, res) {
+    Property.create(req.user.local.properties, function (err, newProperty) {
+      if (err) throw err
+    })
   })
 })
 

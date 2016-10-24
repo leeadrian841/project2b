@@ -19,7 +19,7 @@ module.exports = function (passport) {
     passwordField: 'user[local][password]',
     passReqToCallback: true
   }, function (req, email, password, next) {
-    process.nextTick(function () {
+    // process.nextTick(function () {
       User.findOne({'local.email': email}, function (err, foundUser) {
         if (err) return next(err)
         if (foundUser) {
@@ -31,7 +31,7 @@ module.exports = function (passport) {
           })
         }
       })
-    })
+    // })
   }))
   passport.use('local-login', new LocalStrategy({
     usernameField: 'user[local][email]',

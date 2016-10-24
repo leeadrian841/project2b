@@ -1,6 +1,5 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
-// var Tenant = require('./models/tenant')
 
 var propertySchema = new Schema({
   name: {
@@ -11,7 +10,7 @@ var propertySchema = new Schema({
     type: String,
     required: true
   },
-  postal_code: {
+  postalcode: {
     type: Number,
     required: true
   },
