@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({
 
 app.use('/', usersRoutes)
 app.use('/user/property', propertiesRoutes)
-// app.use('/tenant', tenantsRoutes)
+// app.use('/user/tenant', tenantsRoutes)
 app.use('/api/users', usersAPIRoutes)
 
 app.listen(process.env.PORT || 3000)

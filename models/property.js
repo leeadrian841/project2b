@@ -14,39 +14,12 @@ var propertySchema = new Schema({
     type: Number,
     required: true
   },
-  tenant: {
-    type: Schema.Types.ObjectId, ref: 'Tenant'
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 
-// var tenantSchema = new Schema({
-//   name: {
-//     type: String,
-//     required: true
-//   },
-//   shop_name: {
-//     type: String,
-//     required: true
-//   },
-//   unit: {
-//     type: String,
-//     required: true
-//   },
-//   contact: {
-//     type: Number,
-//     required: true
-//   },
-//   date_rented: {
-//     type: Date,
-//     default: Date.now
-//   },
-//   rent_status: {
-//     enum: ['Paid', 'Owning']
-//   }
-// })
-
-// var Tenant = mongoose.model('Tenant', tenantSchema)
 var Property = mongoose.model('Property', propertySchema)
 
-// module.exports = Tenant
 module.exports = Property

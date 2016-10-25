@@ -1,7 +1,6 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcrypt')
 var Schema = mongoose.Schema
-// var Property = require('./models/property')
 
 // var tenantSchema = new Schema({
 //   name: {
@@ -28,26 +27,30 @@ var Schema = mongoose.Schema
 //     enum: ['Paid', 'Owning']
 //   }
 // })
-var propertySchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  address: {
-    type: String,
-    required: true
-  },
-  postal_code: {
-    type: Number,
-    required: true
-  },
-  tenant: {
-    type: Schema.Types.ObjectId,
-    ref: 'Tenant'
-  }
-})
+// var propertySchema = new Schema({
+//   name: {
+//     type: String,
+//     required: true
+//   },
+//   address: {
+//     type: String,
+//     required: true
+//   },
+//   postal_code: {
+//     type: Number,
+//     required: true
+//   },
+//   tenant: {
+//     type: Schema.Types.ObjectId,
+//     ref: 'Tenant'
+//   }
+// })
 var userSchema = new Schema({
   local: {
+    username: {
+      type: String,
+      required: true
+    },
     email: {
       type: String,
       required: true
@@ -55,13 +58,17 @@ var userSchema = new Schema({
     password: {
       type: String,
       required: true
-    },
-    properties: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Property'
-    }]
+    }
   }
 })
+
+// var newUser = new User({
+//   local: {
+//     email: 'test@gmail.com',
+//     password: 'test123',
+//     properties: []
+//   }
+// })
 
 userSchema.pre('save', function (next) {
   var user = this
@@ -86,9 +93,9 @@ userSchema.methods.authenticate = function (givenPassword, callback) {
 }
 
 // var Tenant = mongoose.model('Tenant', tenantSchema)
-var Property = mongoose.model('Property', propertySchema)
+// var Property = mongoose.model('Property', propertySchema)
 var User = mongoose.model('User', userSchema)
 
 // module.exports = Tenant
-module.exports = Property
+// module.exports = Property
 module.exports = User

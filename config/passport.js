@@ -47,6 +47,7 @@ module.exports = function (passport) {
         //   return done(null, false, req.flash('loginMessage', 'Wrong password! Please type your password!'))
         // }
         return done(null, user, req.flash('profileMessage', 'You have logged in successfully!'))
+        console.log(req.user)
       })
   }))
 }
