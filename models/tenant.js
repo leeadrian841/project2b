@@ -25,6 +25,10 @@ var tenantSchema = new Schema({
   },
   rent_status: {
     enum: ['Paid', 'Owning']
+  },
+  property: {
+    type: Schema.Types.ObjectId,
+    ref: 'Property'
   }
 })
 
