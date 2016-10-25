@@ -33,10 +33,13 @@ router.post('/:id/new', function (req, res) {
       shop_name: req.body.tenant.shop_name,
       unit: req.body.tenant.unit,
       contact: req.body.tenant.contact,
-      date_rented: req.body.tenant.date_rented
+      date_rented: req.body.tenant.date_rented,
+      property: req.params.id
     })
-    newTenant.save()
-    res.redirect('/user/property/:id')
+    newTenant.save(function (err, savedTenant) {
+      if (err) throw err
+      res.redirect('/user/property/' + req.params.id)
+    })
   })
 })
 router.get('/new', function (req, res) {
@@ -50,8 +53,10 @@ router.post('/new', function (req, res) {
       postalcode: req.body.property.postalcode,
       user: req.user._id
     })
-    newProperty.save()
-    res.redirect('/user/property')
+    newProperty.save(function (err, savedProperty) {
+      if (err) throw err
+      res.redirect('/user/property')
+    })
   })
 })
 
