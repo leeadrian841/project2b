@@ -21,14 +21,18 @@ var tenantSchema = new Schema({
   },
   date_rented: {
     type: Date,
-    default: Date.now
+    required: true
   },
   rent_status: {
     enum: ['Paid', 'Owning']
   },
-  property: {
+  property_id: {
     type: Schema.Types.ObjectId,
     ref: 'Property'
+  },
+  user_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 

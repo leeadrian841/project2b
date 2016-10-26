@@ -4,10 +4,22 @@
   <div class="row">
     <a class="btn btn-default btn-primary" href="/user" role="button">Home</a>
     <a class="btn btn-default btn-primary" href="/user/property" role="button">Properties</a>
-    <a class="btn btn-default btn-primary" href="/user/property/<%= property.id %>/new" role="button">Add New Tenant</a>
+    <a class="btn btn-default btn-primary" href="/user/tenant/<%= property._id %>/new" role="button">Add New Tenant</a>
     <a class="btn btn-default btn-primary" href="/logout" role="button">Logout</a>
     <h1>Tenants</h1>
-
+    <ul>
+      <% allTenants.forEach(function(tenant) { %>
+        <li>
+          <%= tenant.shop_name %></br>
+          <%= tenant.name %></br>
+          <%= tenant.unit %></br>
+          <%= tenant.contact %></br>
+          <form action="/user/tenant/<%= tenant._id%>?_method=DELETE" method="POST">
+            <input type="submit" value="DELETE">
+          </form>
+        </li>
+      <% }) %>
+    </ul>
   </div>
 </div>
 

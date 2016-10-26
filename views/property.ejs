@@ -9,9 +9,12 @@
     <ul>
     <% allProperties.forEach(function(property) { %>
       <li>
-        <a href="/user/property/<%= property._id %>"><%= property.name %></a></br>
+        <a href="/user/tenant/<%= property._id %>"><%= property.name %></a></br>
         <%= property.address %></br>
         <%= property.postalcode %></br>
+        <form method="POST" action="/user/property/<%= property._id%>?_method=DELETE" >
+          <input type="submit" value="DELETE">
+        </form>
       </li>
     <% }) %>
     </ul>

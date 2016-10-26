@@ -12,39 +12,41 @@ router.get('/', function (req, res) {
     })
   })
 })
-router.get('/:id', function (req, res) {
-  Property.findOne({_id: req.params.id}, function (err, property) {
-    res.render('tenant', {
-      property: property
-    })
-  })
-})
-router.get('/:id/new', function (req, res) {
-  Property.findOne({_id: req.params.id}, function (err, property) {
-    res.render('newtenant', {
-      property: property
-    })
-  })
-})
-router.post('/:id/new', function (req, res) {
-  Property.findOne({_id: req.params.id}, function (err, property) {
-    var newTenant = new Tenant({
-      name: req.body.tenant.name,
-      shop_name: req.body.tenant.shop_name,
-      unit: req.body.tenant.unit,
-      contact: req.body.tenant.contact,
-      date_rented: req.body.tenant.date_rented,
-      property: req.params.id
-    })
-    newTenant.save(function (err, savedTenant) {
-      if (err) throw err
-      res.redirect('/user/property/' + req.params.id)
-    })
-  })
-})
+// Go to new property
 router.get('/new', function (req, res) {
   res.render('newproperty')
 })
+router.get('/:name', function (req, res) {
+  Property.findOne({name: req.params.name}, function (err, property) {
+    Tenant.find({
+      property_id: property._id
+    })
+    .populate('user_id')
+    .exec(function (err, allTenants) {
+      res.render('tenant', {
+        property: property,
+        allTenants: allTenants
+      })
+    })
+  })
+})
+// router.get('/:id/new', function (req, res) {
+//   Property.findOne({_id: req.params.id}, function (err, property) {
+//     res.render('newtenant', {
+//       property: property
+//     })
+//   })
+// })
+router.delete('/:id', function (req, res) {
+  Property.findByIdAndRemove(req.params.id, function (err, property) {
+    if (err) {
+      res.render('edit')
+    } else {
+      res.redirect('/user/property')
+    }
+  })
+})
+// Create new property
 router.post('/new', function (req, res) {
   User.find(req.user._id, function (err, user) {
     var newProperty = new Property({
@@ -59,5 +61,21 @@ router.post('/new', function (req, res) {
     })
   })
 })
+// router.post('/:id/new', function (req, res) {
+//   Property.findOne({_id: req.params.id}, function (err, property) {
+//     var newTenant = new Tenant({
+//       name: req.body.tenant.name,
+//       shop_name: req.body.tenant.shop_name,
+//       unit: req.body.tenant.unit,
+//       contact: req.body.tenant.contact,
+//       date_rented: req.body.tenant.date_rented,
+//       property: req.params.id
+//     })
+//     newTenant.save(function (err, savedTenant) {
+//       if (err) throw err
+//       res.redirect('/user/property/' + req.params.id)
+//     })
+//   })
+// })
 
 module.exports = router
