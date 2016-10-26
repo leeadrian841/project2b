@@ -46,17 +46,10 @@ router.get('/:id/edit', function (req, res) {
   })
 })
 router.put('/:id/edit', function (req, res) {
-  Property.findByIdAndUpdate(req.params.id, function (err, property) {
-    var newProperty = new Property({
-      name: req.body.property.name,
-      address: req.body.property.address,
-      postalcode: req.body.property.postalcode,
-      user: req.user._id
-    })
-    newProperty.save(function (err, savedProperty) {
-      if (err) throw err
-      res.redirect('/user/property')
-    })
+  var editProperty = req.body.property
+  Property.findByIdAndUpdate(req.params.id, editProperty, function (err, property) {
+    if (err) throw err
+    res.redirect('/user/property')
   })
 })
 router.delete('/:id', function (req, res) {
@@ -83,21 +76,5 @@ router.post('/new', function (req, res) {
     })
   })
 })
-// router.post('/:id/new', function (req, res) {
-//   Property.findOne({_id: req.params.id}, function (err, property) {
-//     var newTenant = new Tenant({
-//       name: req.body.tenant.name,
-//       shop_name: req.body.tenant.shop_name,
-//       unit: req.body.tenant.unit,
-//       contact: req.body.tenant.contact,
-//       date_rented: req.body.tenant.date_rented,
-//       property: req.params.id
-//     })
-//     newTenant.save(function (err, savedTenant) {
-//       if (err) throw err
-//       res.redirect('/user/property/' + req.params.id)
-//     })
-//   })
-// })
 
 module.exports = router
