@@ -80,5 +80,14 @@ router.post('/:id/new', function (req, res) {
 // router.post('/:id/edit', function (req, res) {
 //
 // })
+router.delete('/:id', function (req, res) {
+  Property.findByIdAndRemove(req.params.id, function (err, property) {
+    if (err) {
+      res.render('edit')
+    } else {
+      res.redirect('/user/property')
+    }
+  })
+})
 
 module.exports = router

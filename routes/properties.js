@@ -16,6 +16,14 @@ router.get('/', function (req, res) {
 router.get('/new', function (req, res) {
   res.render('newproperty')
 })
+router.post('/:id/edit', function (req, res) {
+  Property.findById(req.params.id, function (err, property) {
+    if (err) throw err
+    res.render('editproperty', {
+      property: property
+    })
+  })
+})
 router.get('/:name', function (req, res) {
   Property.findOne({name: req.params.name}, function (err, property) {
     Tenant.find({
@@ -40,7 +48,7 @@ router.get('/:name', function (req, res) {
 router.delete('/:id', function (req, res) {
   Property.findByIdAndRemove(req.params.id, function (err, property) {
     if (err) {
-      res.render('edit')
+      throw err
     } else {
       res.redirect('/user/property')
     }
