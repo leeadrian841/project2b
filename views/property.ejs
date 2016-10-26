@@ -13,10 +13,10 @@
         <%= property.address %></br>
         <%= property.postalcode %></br>
         <form method="GET" action="/user/property/<%=property._id%>/edit">
-          <input type="submit" value="EDIT">
+          <button type="submit" class="btn btn-default btn-primary">Edit</button>
         </form>
         <form method="POST" action="/user/property/<%=property._id%>?_method=DELETE">
-          <input type="submit" value="DELETE">
+          <button type="submit" class="btn btn-default btn-danger">Delete</button>
         </form>
       </li>
     <% }) %>
