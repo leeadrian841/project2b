@@ -4,6 +4,20 @@ var router = express.Router()
 var Tenant = require('../models/tenant')
 var Property = require('../models/property')
 
+router.get('/', function (req, res) {
+  Property.findById({_id: req.params.id}, function (err, property) {
+    Tenant.find({
+      property_id: property._id
+    })
+    .populate('property_id')
+    .exec(function (err, allTenants) {
+      res.render('tenant', {
+        property: property,
+        allTenants: allTenants
+      })
+    })
+  })
+})
 router.get('/:id', function (req, res) {
   Property.findById({_id: req.params.id}, function (err, property) {
     Tenant.find({
@@ -81,11 +95,11 @@ router.post('/:id/new', function (req, res) {
 //
 // })
 router.delete('/:id', function (req, res) {
-  Property.findByIdAndRemove(req.params.id, function (err, property) {
+  Tenant.findByIdAndRemove(req.params.id, function (err, property) {
     if (err) {
-      res.render('edit')
+      throw err
     } else {
-      res.redirect('/user/property')
+      res.redirect('/user/tenant/')
     }
   })
 })

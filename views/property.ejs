@@ -12,7 +12,7 @@
         <a href="/user/tenant/<%= property._id %>"><%= property.name %></a></br>
         <%= property.address %></br>
         <%= property.postalcode %></br>
-        <form method="POST" action="/user/property/<%=property._id%>/edit">
+        <form method="GET" action="/user/property/<%=property._id%>/edit">
           <input type="submit" value="EDIT">
         </form>
         <form method="POST" action="/user/property/<%=property._id%>?_method=DELETE" >

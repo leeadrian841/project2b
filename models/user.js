@@ -2,49 +2,6 @@ var mongoose = require('mongoose')
 var bcrypt = require('bcrypt')
 var Schema = mongoose.Schema
 
-// var tenantSchema = new Schema({
-//   name: {
-//     type: String,
-//     required: true
-//   },
-//   shop_name: {
-//     type: String,
-//     required: true
-//   },
-//   unit: {
-//     type: String,
-//     required: true
-//   },
-//   contact: {
-//     type: Number,
-//     required: true
-//   },
-//   date_rented: {
-//     type: Date,
-//     default: Date.now
-//   },
-//   rent_status: {
-//     enum: ['Paid', 'Owning']
-//   }
-// })
-// var propertySchema = new Schema({
-//   name: {
-//     type: String,
-//     required: true
-//   },
-//   address: {
-//     type: String,
-//     required: true
-//   },
-//   postal_code: {
-//     type: Number,
-//     required: true
-//   },
-//   tenant: {
-//     type: Schema.Types.ObjectId,
-//     ref: 'Tenant'
-//   }
-// })
 var userSchema = new Schema({
   local: {
     username: {
@@ -61,14 +18,6 @@ var userSchema = new Schema({
     }
   }
 })
-
-// var newUser = new User({
-//   local: {
-//     email: 'test@gmail.com',
-//     password: 'test123',
-//     properties: []
-//   }
-// })
 
 userSchema.pre('save', function (next) {
   var user = this
