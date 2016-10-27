@@ -19,7 +19,7 @@ module.exports = function (passport) {
     passwordField: 'user[local][password]',
     passReqToCallback: true
   }, function (req, email, password, next) {
-    // process.nextTick(function () {
+    process.nextTick(function () {
       User.findOne({'local.email': email}, function (err, foundUser) {
         if (err) return next(err)
         if (foundUser) {
@@ -27,27 +27,30 @@ module.exports = function (passport) {
         } else {
           User.create(req.body.user, function (err, newUser) {
             if (err) throw err
-            return next(null, newUser, req.flash('signupMessage', 'New user created!'))
+            return next(null, newUser)
           })
         }
       })
-    // })
+    })
   }))
+
   passport.use('local-login', new LocalStrategy({
     usernameField: 'user[local][email]',
     passwordField: 'user[local][password]',
     passReqToCallback: true
   }, function (req, email, password, done) {
-      User.findOne({'local.email': email}, function (err, user) {
-        if (err) throw done(err)
-        if (!user) {
+      User.findOne({'local.email': email}, function (err, foundUser) {
+        if (err) return done(err)
+        if (!foundUser)
           return done(null, false, req.flash('loginMessage', 'No user found! Please sign up!'))
-        }
-        // if (!user.validPassword(password)) {
-        //   return done(null, false, req.flash('loginMessage', 'Wrong password! Please type your password!'))
-        // }
-        return done(null, user, req.flash('profileMessage', 'You have logged in successfully!'))
-        console.log(req.user)
+        foundUser.authenticate(password, function (err, authenticated) {
+          if (err) return done(err)
+          if (authenticated) {
+            return done(null, foundUser, req.flash('profileMessage', 'You have logged in successfully!'))
+          } else {
+            return done(null, false, req.flash('loginMessage', 'Wrong password! Please type your password again!'))
+          }
+        })
       })
   }))
 }

@@ -33,10 +33,10 @@ app.use(flash())
 
 // app.use(express.static(__dirname + '/public'))
 
-app.use(function (req, res, next) {
-  res.locals.user = req.user
-  next()
-})
+// app.use(function (req, res, next) {
+//   res.locals.user = req.user
+//   next()
+// })
 
 var usersRoutes = require('./routes/users')
 var propertiesRoutes = require('./routes/properties')
