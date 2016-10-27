@@ -27,7 +27,7 @@ module.exports = function (passport) {
         } else {
           User.create(req.body.user, function (err, newUser) {
             if (err) throw err
-            return next(null, newUser)
+            return next(null, newUser, req.flash('profileMessage', 'You have signed up successfully!'))
           })
         }
       })
