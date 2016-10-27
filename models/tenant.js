@@ -23,6 +23,10 @@ var tenantSchema = new Schema({
     type: Date,
     required: true
   },
+  rent_status: {
+    type: String,
+    required: true
+  },
   property_id: {
     type: Schema.Types.ObjectId,
     ref: 'Property'

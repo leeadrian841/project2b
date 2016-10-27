@@ -73,10 +73,14 @@ router.get('/:id/tenant', function (req, res) {
     })
     .populate('user_id')
     .exec(function (err, allTenants) {
-      res.render('tenant', {
-        property: property,
-        allTenants: allTenants
-      })
+      if (err) {
+        res.redirect('/user')
+      } else {
+        res.render('tenant', {
+          property: property,
+          allTenants: allTenants
+        })
+      }
     })
   })
 })
@@ -97,6 +101,7 @@ router.post('/:id/tenant/new', function (req, res) {
       unit: req.body.tenant.unit,
       contact: req.body.tenant.contact,
       date_rented: req.body.tenant.date_rented,
+      rent_status: req.body.tenant.rent_status,
       property_id: req.params.id,
       user_id: req.user._id
     })

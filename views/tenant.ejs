@@ -1,29 +1,60 @@
 <% include ./partials/header.ejs  %>
 
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">EasyRetail</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/user">Home</a></li>
+      <li><a href="/user/property">Properties</a></li>
+      <li><a href="/user/property/<%= property._id %>/tenant">Tenants</a></li>
+      <li><a href="/user/property/<%=property._id%>/tenant/new">Add New Tenant</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
 <div class="container">
   <div class="row">
-    <a class="btn btn-default btn-primary" href="/user" role="button">Home</a>
-    <a class="btn btn-default btn-primary" href="/user/property" role="button">Properties</a>
-    <a class="btn btn-default btn-primary" href="/user/property/<%=property._id%>/tenant/new" role="button">Add New Tenant</a>
-    <a class="btn btn-default btn-primary" href="/logout" role="button">Logout</a>
     <h1>Tenants</h1>
-    <ul>
-      <% allTenants.forEach(function(tenant) { %>
-        <li>
-          <%= tenant.shop_name %></br>
-          <%= tenant.name %></br>
-          <%= tenant.unit %></br>
-          <%= tenant.contact %></br>
-          <%= tenant.date_rented %></br>
-          <form method="GET" action="/user/property/<%=property._id%>/tenant/<%=tenant._id%>/edit">
-            <button type="submit" class="btn btn-default btn-danger">Edit</button>
-          </form>
-          <form method="POST" action="/user/property/<%=property._id%>/tenant/<%=tenant._id%>?_method=DELETE">
-            <button type="submit" class="btn btn-default btn-danger">Delete</button>
-          </form>
-        </li>
-      <% }) %>
-    </ul>
+    <h1></h1>
+    <table class="table table-hover">
+      <thead class="thead-default">
+        <tr>
+          <th>Tenant Name</th>
+          <th>Shop Name</th>
+          <th>Unit No.</th>
+          <th>Contact No.</th>
+          <th>Date Rented</th>
+          <th>Rental Status</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% allTenants.forEach(function(tenant) { %>
+          <% var ds = new Date(tenant.date_rented)%>
+          <% var ddmmyy = ds.getDate() + "-" + ds.getMonth() + "-" + ds.getFullYear() %>
+          <% %>
+          <tr>
+            <td><%= tenant.shop_name %></td>
+            <td><%= tenant.name %></td>
+            <td><%= tenant.unit %></td>
+            <td><%= tenant.contact %></td>
+            <td><%= ddmmyy %></td>
+            <td><%= tenant.rent_status %></td>
+            <td><form method="GET" action="/user/property/<%=property._id%>/tenant/<%=tenant._id%>/edit">
+              <button type="submit" class="btn btn-warning btn-large">Edit</button>
+            </form></td>
+            <td><form method="POST" action="/user/property/<%=property._id%>/tenant/<%=tenant._id%>?_method=DELETE">
+              <button type="submit" class="btn btn-danger btn-large">Delete</button>
+            </form></td>
+            </tr>
+          <% }) %>
+      </tbody>
+    </table>
   </div>
 </div>
 
