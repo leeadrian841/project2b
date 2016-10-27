@@ -99,5 +99,14 @@ router.post('/new', function (req, res) {
     })
   })
 })
+router.delete('/:prop_id/tenant/:id', function (req, res) {
+  Tenant.findByIdAndRemove(req.params.id, function (err, tenant) {
+    if (err) {
+      throw err
+    } else {
+      res.redirect('/user/property/' + req.params.prop_id + '/tenant')
+    }
+  })
+})
 
 module.exports = router
