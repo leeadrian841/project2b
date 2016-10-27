@@ -99,6 +99,23 @@ router.post('/new', function (req, res) {
     })
   })
 })
+router.get('/:prop_id/tenant/:id/edit', function (req, res) {
+  Property.findById(req.params.prop_id, function (err, property) {
+    Tenant.findById(req.params.id, function (err, tenant) {
+      res.render('edittenant', {
+        property: property,
+        tenant: tenant
+      })
+    })
+  })
+})
+router.put('/:prop_id/tenant/:id/edit', function (req, res) {
+  var editTenant = req.body.property
+  Tenant.findByIdAndUpdate(req.params.id, editTenant, function (err, tenant) {
+    if (err) throw err
+    res.redirect('/user/property/' + req.params.prop_id + "/tenant")
+  })
+})
 router.delete('/:prop_id/tenant/:id', function (req, res) {
   Tenant.findByIdAndRemove(req.params.id, function (err, tenant) {
     if (err) {
