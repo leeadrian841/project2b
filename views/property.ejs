@@ -9,9 +9,10 @@
     <ul>
     <% allProperties.forEach(function(property) { %>
       <li>
-        <a href="/user/tenant/<%= property._id %>"><%= property.name %></a></br>
+        <%= property.name %></br>
         <%= property.address %></br>
         <%= property.postalcode %></br>
+        <a class="btn btn-default btn-primary" href="/user/property/<%=property._id%>/tenant" role="button">Tenants</a>
         <form method="GET" action="/user/property/<%=property._id%>/edit">
           <button type="submit" class="btn btn-default btn-primary">Edit</button>
         </form>

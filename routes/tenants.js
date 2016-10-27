@@ -59,7 +59,8 @@ router.post('/:id/new', function (req, res) {
       unit: req.body.tenant.unit,
       contact: req.body.tenant.contact,
       date_rented: req.body.tenant.date_rented,
-      property_id: req.params.id
+      property_id: req.params.id,
+      user_id: req.user._id
     })
     newTenant.save(function (err, savedTenant) {
       if (err) throw err
@@ -95,12 +96,17 @@ router.post('/:id/new', function (req, res) {
 //
 // })
 router.delete('/:id', function (req, res) {
-  Tenant.findByIdAndRemove(req.params.id, function (err, property) {
-    if (err) {
-      throw err
-    } else {
-      res.redirect('/user/tenant/')
-    }
+  console.log(req.user.property)
+  Tenant.find({}, function (err, property) {
+    Tenant.findByIdAndRemove(req.params.id, function (err, tenant) {
+      if (err) {
+        throw err
+      } else {
+        res.redirect('/user/tenant/<%=property._id%>', {
+          property: property
+        })
+      }
+    })
   })
 })
 

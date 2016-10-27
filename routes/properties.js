@@ -5,6 +5,7 @@ var User = require('../models/user')
 var Property = require('../models/property')
 var Tenant = require('../models/tenant')
 
+// Go to properties page
 router.get('/', function (req, res) {
   Property.find({user: req.user._id}, function (err, allProperties) {
     res.render('property', {
@@ -16,16 +17,17 @@ router.get('/', function (req, res) {
 router.get('/new', function (req, res) {
   res.render('newproperty')
 })
-// router.post('/:id/edit', function (req, res) {
-//   Property.findById(req.params.id, function (err, property) {
-//     if (err) throw err
-//     res.render('editproperty', {
-//       property: property
-//     })
-//   })
-// })
-router.get('/:id', function (req, res) {
-  Property.findOne({name: req.params.id}, function (err, property) {
+// Edit property
+router.get('/:id/edit', function (req, res) {
+  Property.findById(req.params.id, function (err, property) {
+    res.render('editproperty', {
+      property: property
+    })
+  })
+})
+// Go to tenants page
+router.get('/:id/tenant', function (req, res) {
+  Property.findOne({_id: req.params.id}, function (err, property) {
     Tenant.find({
       property_id: property._id
     })
@@ -38,13 +40,33 @@ router.get('/:id', function (req, res) {
     })
   })
 })
-router.get('/:id/edit', function (req, res) {
-  Property.findById(req.params.id, function (err, property) {
-    res.render('editproperty', {
+// Create new tenant
+router.get('/:id/tenant/new', function (req, res) {
+  Property.findById({_id: req.params.id}, function (err, property) {
+    res.render('newtenant', {
       property: property
     })
   })
 })
+// Save new tenant
+router.post('/:id/tenant/new', function (req, res) {
+  Property.findById({_id: req.params.id}, function (err, property) {
+    var newTenant = new Tenant({
+      name: req.body.tenant.name,
+      shop_name: req.body.tenant.shop_name,
+      unit: req.body.tenant.unit,
+      contact: req.body.tenant.contact,
+      date_rented: req.body.tenant.date_rented,
+      property_id: req.params.id,
+      user_id: req.user._id
+    })
+    newTenant.save(function (err, savedTenant) {
+      if (err) throw err
+      res.redirect('/user/property/' + req.params.id + '/tenant')
+    })
+  })
+})
+// Update property
 router.put('/:id/edit', function (req, res) {
   var editProperty = req.body.property
   Property.findByIdAndUpdate(req.params.id, editProperty, function (err, property) {
@@ -52,6 +74,7 @@ router.put('/:id/edit', function (req, res) {
     res.redirect('/user/property')
   })
 })
+// Remove property
 router.delete('/:id', function (req, res) {
   Property.findByIdAndRemove(req.params.id, function (err, property) {
     if (err) {
@@ -61,7 +84,7 @@ router.delete('/:id', function (req, res) {
     }
   })
 })
-// Create new property
+// Save new property
 router.post('/new', function (req, res) {
   User.find(req.user._id, function (err, user) {
     var newProperty = new Property({

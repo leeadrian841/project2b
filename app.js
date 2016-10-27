@@ -33,7 +33,7 @@ app.use(flash())
 
 var usersRoutes = require('./routes/users')
 var propertiesRoutes = require('./routes/properties')
-var tenantsRoutes = require('./routes/tenants')
+// var tenantsRoutes = require('./routes/tenants')
 var usersAPIRoutes = require('./routes/users_api')
 
 app.use(bodyParser.json())
@@ -44,7 +44,7 @@ app.use(methodOverride('_method'))
 
 app.use('/', usersRoutes)
 app.use('/user/property', propertiesRoutes)
-app.use('/user/tenant', tenantsRoutes)
+// app.use('/user/tenant', tenantsRoutes)
 app.use('/api/users', usersAPIRoutes)
 
 app.listen(process.env.PORT || 3000)
