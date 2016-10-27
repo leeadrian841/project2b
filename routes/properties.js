@@ -110,7 +110,7 @@ router.get('/:prop_id/tenant/:id/edit', function (req, res) {
   })
 })
 router.put('/:prop_id/tenant/:id/edit', function (req, res) {
-  var editTenant = req.body.property
+  var editTenant = req.body.tenant
   Tenant.findByIdAndUpdate(req.params.id, editTenant, function (err, tenant) {
     if (err) throw err
     res.redirect('/user/property/' + req.params.prop_id + "/tenant")
