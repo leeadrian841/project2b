@@ -27,8 +27,11 @@ router.post('/new', function (req, res) {
       user: req.user._id
     })
     newProperty.save(function (err, savedProperty) {
-      if (err) throw err
-      res.redirect('/user/property')
+      if (err) {
+        res.redirect('/user/property/new')
+      } else {
+        res.redirect('/user/property')
+      }
     })
   })
 })
@@ -44,8 +47,11 @@ router.get('/:id/edit', function (req, res) {
 router.put('/:id/edit', function (req, res) {
   var editProperty = req.body.property
   Property.findByIdAndUpdate(req.params.id, editProperty, function (err, property) {
-    if (err) throw err
-    res.redirect('/user/property')
+    if (err) {
+      res.redirect('/user/property/' + req.params.id + '/edit')
+    } else {
+      res.redirect('/user/property')
+    }
   })
 })
 // Remove property
@@ -95,8 +101,11 @@ router.post('/:id/tenant/new', function (req, res) {
       user_id: req.user._id
     })
     newTenant.save(function (err, savedTenant) {
-      if (err) throw err
-      res.redirect('/user/property/' + req.params.id + '/tenant')
+      if (err) {
+        res.redirect('/user/property/' + req.params.id + '/tenant/new')
+      } else {
+        res.redirect('/user/property/' + req.params.id + '/tenant')
+      }
     })
   })
 })
@@ -115,8 +124,11 @@ router.get('/:prop_id/tenant/:id/edit', function (req, res) {
 router.put('/:prop_id/tenant/:id/edit', function (req, res) {
   var editTenant = req.body.tenant
   Tenant.findByIdAndUpdate(req.params.id, editTenant, function (err, tenant) {
-    if (err) throw err
-    res.redirect('/user/property/' + req.params.prop_id + "/tenant")
+    if (err) {
+      res.redirect('/user/property/' + req.params.prop_id + '/tenant/' + req.params.id + '/new')
+    } else {
+      res.redirect('/user/property/' + req.params.prop_id + '/tenant')
+    }
   })
 })
 // Delete tenant
