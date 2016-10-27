@@ -23,11 +23,11 @@ module.exports = function (passport) {
       User.findOne({'local.email': email}, function (err, foundUser) {
         if (err) return next(err)
         if (foundUser) {
-          return next(null, false, req.flash('signupMessage', 'Email has been taken!'))
+          return next(null, false, req.flash('signupMessage', 'This email has been taken!'))
         } else {
           User.create(req.body.user, function (err, newUser) {
             if (err) throw err
-            return next(null, newUser, req.flash('profileMessage', 'You have signed up successfully!'))
+            return next(null, newUser, req.flash('profileMessage', 'You have signed up!'))
           })
         }
       })
@@ -46,7 +46,7 @@ module.exports = function (passport) {
         foundUser.authenticate(password, function (err, authenticated) {
           if (err) return done(err)
           if (authenticated) {
-            return done(null, foundUser, req.flash('profileMessage', 'You have logged in successfully!'))
+            return done(null, foundUser, req.flash('profileMessage', 'You have logged in!'))
           } else {
             return done(null, false, req.flash('loginMessage', 'Wrong password! Please type your password again!'))
           }
