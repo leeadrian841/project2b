@@ -13,56 +13,30 @@ router.get('/', function (req, res) {
     })
   })
 })
-// Go to new property
+// Create new property
 router.get('/new', function (req, res) {
   res.render('newproperty')
+})
+// Save new property
+router.post('/new', function (req, res) {
+  User.find(req.user._id, function (err, user) {
+    var newProperty = new Property({
+      name: req.body.property.name,
+      address: req.body.property.address,
+      postalcode: req.body.property.postalcode,
+      user: req.user._id
+    })
+    newProperty.save(function (err, savedProperty) {
+      if (err) throw err
+      res.redirect('/user/property')
+    })
+  })
 })
 // Edit property
 router.get('/:id/edit', function (req, res) {
   Property.findById(req.params.id, function (err, property) {
     res.render('editproperty', {
       property: property
-    })
-  })
-})
-// Go to tenants page
-router.get('/:id/tenant', function (req, res) {
-  Property.findOne({_id: req.params.id}, function (err, property) {
-    Tenant.find({
-      property_id: property._id
-    })
-    .populate('user_id')
-    .exec(function (err, allTenants) {
-      res.render('tenant', {
-        property: property,
-        allTenants: allTenants
-      })
-    })
-  })
-})
-// Create new tenant
-router.get('/:id/tenant/new', function (req, res) {
-  Property.findById({_id: req.params.id}, function (err, property) {
-    res.render('newtenant', {
-      property: property
-    })
-  })
-})
-// Save new tenant
-router.post('/:id/tenant/new', function (req, res) {
-  Property.findById({_id: req.params.id}, function (err, property) {
-    var newTenant = new Tenant({
-      name: req.body.tenant.name,
-      shop_name: req.body.tenant.shop_name,
-      unit: req.body.tenant.unit,
-      contact: req.body.tenant.contact,
-      date_rented: req.body.tenant.date_rented,
-      property_id: req.params.id,
-      user_id: req.user._id
-    })
-    newTenant.save(function (err, savedTenant) {
-      if (err) throw err
-      res.redirect('/user/property/' + req.params.id + '/tenant')
     })
   })
 })
@@ -84,21 +58,49 @@ router.delete('/:id', function (req, res) {
     }
   })
 })
-// Save new property
-router.post('/new', function (req, res) {
-  User.find(req.user._id, function (err, user) {
-    var newProperty = new Property({
-      name: req.body.property.name,
-      address: req.body.property.address,
-      postalcode: req.body.property.postalcode,
-      user: req.user._id
+
+// Go to tenants page
+router.get('/:id/tenant', function (req, res) {
+  Property.findOne({_id: req.params.id}, function (err, property) {
+    Tenant.find({
+      property_id: property._id
     })
-    newProperty.save(function (err, savedProperty) {
-      if (err) throw err
-      res.redirect('/user/property')
+    .populate('user_id')
+    .exec(function (err, allTenants) {
+      res.render('tenant', {
+        property: property,
+        allTenants: allTenants
+      })
     })
   })
 })
+// Create new tenant
+router.get('/:id/tenant/new', function (req, res) {
+  Property.findById(req.params.id, function (err, property) {
+    res.render('newtenant', {
+      property: property
+    })
+  })
+})
+// Save new tenant
+router.post('/:id/tenant/new', function (req, res) {
+  Property.findById(req.params.id, function (err, property) {
+    var newTenant = new Tenant({
+      name: req.body.tenant.name,
+      shop_name: req.body.tenant.shop_name,
+      unit: req.body.tenant.unit,
+      contact: req.body.tenant.contact,
+      date_rented: req.body.tenant.date_rented,
+      property_id: req.params.id,
+      user_id: req.user._id
+    })
+    newTenant.save(function (err, savedTenant) {
+      if (err) throw err
+      res.redirect('/user/property/' + req.params.id + '/tenant')
+    })
+  })
+})
+// Edit tenant
 router.get('/:prop_id/tenant/:id/edit', function (req, res) {
   Property.findById(req.params.prop_id, function (err, property) {
     Tenant.findById(req.params.id, function (err, tenant) {
@@ -109,6 +111,7 @@ router.get('/:prop_id/tenant/:id/edit', function (req, res) {
     })
   })
 })
+// Update tenant
 router.put('/:prop_id/tenant/:id/edit', function (req, res) {
   var editTenant = req.body.tenant
   Tenant.findByIdAndUpdate(req.params.id, editTenant, function (err, tenant) {
@@ -116,6 +119,7 @@ router.put('/:prop_id/tenant/:id/edit', function (req, res) {
     res.redirect('/user/property/' + req.params.prop_id + "/tenant")
   })
 })
+// Delete tenant
 router.delete('/:prop_id/tenant/:id', function (req, res) {
   Tenant.findByIdAndRemove(req.params.id, function (err, tenant) {
     if (err) {
