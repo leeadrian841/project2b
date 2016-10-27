@@ -41,10 +41,6 @@ userSchema.methods.authenticate = function (givenPassword, callback) {
   })
 }
 
-// var Tenant = mongoose.model('Tenant', tenantSchema)
-// var Property = mongoose.model('Property', propertySchema)
 var User = mongoose.model('User', userSchema)
 
-// module.exports = Tenant
-// module.exports = Property
 module.exports = User

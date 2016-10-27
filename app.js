@@ -41,6 +41,8 @@ app.use(function (req, res, next) {
 var usersRoutes = require('./routes/users')
 var propertiesRoutes = require('./routes/properties')
 var usersAPIRoutes = require('./routes/users_api')
+var propertiesAPIRoutes = require('./routes/properties_api')
+var tenantsAPIRoutes = require('./routes/tenants_api')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -51,6 +53,8 @@ app.use(methodOverride('_method'))
 app.use('/', usersRoutes)
 app.use('/user/property', propertiesRoutes)
 app.use('/api/users', usersAPIRoutes)
+app.use('/api/properties', propertiesAPIRoutes)
+app.use('/api/tenants', tenantsAPIRoutes)
 
 app.listen(process.env.PORT || 3000)
 console.log('Server initiated at port ' + (process.env.PORT || 3000))

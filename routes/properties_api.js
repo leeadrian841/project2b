@@ -1,17 +1,17 @@
 var express = require('express')
 var router = express.Router()
 
-var User = require('../models/user')
+var Property = require('../models/property')
 
 router.get('/', function (req, res) {
-  User.find({}, function (err, allUsers) {
-    res.json(allUsers)
+  Property.find({}, function (err, allProperties) {
+    res.json(allProperties)
   })
 })
 
 router.get('/:id', function (req, res) {
-  User.findOne({ '_id': req.params.id }, function (err, user) {
-    res.json(user)
+  Property.findOne({ '_id': req.params.id }, function (err, property) {
+    res.json(property)
   })
 })
 
