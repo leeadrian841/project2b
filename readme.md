@@ -1,7 +1,7 @@
 EasyRetail
 ===========
 
-Welcome to Color Craze!
+Welcome to EasyRetail!
 A sleek and easy retail management platform by @leeadrian841
 
 
