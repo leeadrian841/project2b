@@ -2,12 +2,11 @@
 <nav class="navbar navbar-default navbar-static-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand">EasyRetail</a>
+      <a class="navbar-brand"><strong>EasyRetail</strong></a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="/user">Home</a></li>
+      <li class="active"><a href="/user">Home</a></li>
       <li><a href="/user/property">Properties</a></li>
-      <li><a href="/user/property/<%= property._id %>/tenant">Tenants</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -16,8 +15,9 @@
 </nav>
 <div class="container">
   <div class="row">
-    <h1>Edit Tenant</h1>
-    <h1></h1>
+    <h2><strong>Edit Tenant</strong></h2>
+  </div>
+  <div class="row">
     <form action="/user/property/<%=property._id%>/tenant/<%=tenant._id%>/edit?_method=PUT" method="post">
       <div class="form-group">
         <label for="InputName">Name of Tenant</label>
@@ -40,7 +40,7 @@
         <input type="date" class="form-control" id="InputDateRented" name="tenant[date_rented]" placeholder="Date Rented" value="<%=tenant.date_rented%>">
       </div>
       <div class="form-group">
-        <label for="InputRentalStatus">Rental Status (Paid/Owning)</label>
+        <label for="InputRentalStatus">Rental Status (Paid/Owing)</label>
         <input type="text" class="form-control" id="InputRentalStatus" name="tenant[rent_status]" placeholder="Rental Status" value="<%=tenant.rent_status%>">
       </div>
       <button type="submit" class="btn btn-default btn-primary">Save</button>

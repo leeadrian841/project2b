@@ -5,9 +5,8 @@
       <a class="navbar-brand">EasyRetail</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="/user">Home</a></li>
+      <li class="active"><a href="/user">Home</a></li>
       <li><a href="/user/property">Properties</a></li>
-      <li><a href="/user/property/new">Add New Property</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -16,11 +15,10 @@
 </nav>
 <div class="container">
   <div class="row">
-    <h1>Properties</h1>
-    <h1></h1>
+      <h2><strong>Properties</strong></h2>
   </div>
-  <div class="row">
-    <table class="table table-hover">
+  <div class="row table-responsive">
+    <table class="table table-striped">
       <thead class="thead-default">
         <tr>
           <th>Property Name</th>
@@ -37,7 +35,7 @@
             <td><%= property.name %></td>
             <td><%= property.address %></td>
             <td><%= property.postalcode %></td>
-            <td><a class="btn btn-primary btn-large" href="/user/property/<%=property._id%>/tenant" role="button">Tenants</a></td>
+            <td><a class="btn btn-primary btn-large" href="/user/property/<%=property._id%>/tenant" role="button">View tenants</a></td>
             <td><form method="GET" action="/user/property/<%=property._id%>/edit">
               <button type="submit" class="btn btn-warning  btn-large">Edit</button>
             </form></td>
@@ -48,6 +46,9 @@
         <% }) %>
       </tbody>
     </table>
+  </div>
+  <div class="row">
+    <a class="btn btn-success btn-large" href="/user/property/new" role="button">Add new property</a>
   </div>
 </div>
 
