@@ -18,7 +18,7 @@
     <h2><strong>Edit Property</strong></h2>
   </div>
   <div class="row">
-    <form action="/user/property/<%=property._id%>/edit?_method=PUT" method="post">
+    <form action="/user/property/<%=property._id%>/edit?_method=PUT" method="post" data-parsley-validate>
       <div class="form-group">
         <label for="InputProperty">Edit Property</label>
         <input type="text" class="form-control" id="InputProperty" name="property[name]" placeholder="Property Name" value="<%=property.name%>">

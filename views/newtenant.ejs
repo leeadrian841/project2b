@@ -19,7 +19,7 @@
     <h2><strong>New Tenant</strong></h2>
   </div>
   <div class="row">
-    <form action="/user/property/<%= property._id %>/tenant/new" method="post">
+    <form action="/user/property/<%= property._id %>/tenant/new" method="post" data-parsley-validate>
       <div class="form-group">
         <label for="InputName">Name of Tenant</label>
         <input type="text" class="form-control" id="InputName" name="tenant[name]" placeholder="Tenant Name">

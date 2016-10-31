@@ -21,7 +21,9 @@ module.exports = function (passport) {
   }, function (req, email, password, next) {
     process.nextTick(function () {
       User.findOne({'local.email': email}, function (err, foundUser) {
-        if (err) return next(err)
+        if (err) {
+          return next(err)
+        }
         if (foundUser) {
           return next(null, false, req.flash('signupMessage', 'This email has been taken!'))
         } else {

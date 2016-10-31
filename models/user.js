@@ -6,15 +6,16 @@ var userSchema = new Schema({
   local: {
     username: {
       type: String,
-      required: true
+      required: [true, 'Please type your username']
     },
     email: {
       type: String,
-      required: true
+      required: [true, 'Please type your email']
     },
     password: {
       type: String,
-      required: true
+      required: [true, 'Please type your password']
+      // minlength: [6, 'Password too short']
     }
   }
 })

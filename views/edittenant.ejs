@@ -18,7 +18,7 @@
     <h2><strong>Edit Tenant</strong></h2>
   </div>
   <div class="row">
-    <form action="/user/property/<%=property._id%>/tenant/<%=tenant._id%>/edit?_method=PUT" method="post">
+    <form action="/user/property/<%=property._id%>/tenant/<%=tenant._id%>/edit?_method=PUT" method="post" data-parsley-validate>
       <div class="form-group">
         <label for="InputName">Name of Tenant</label>
         <input type="text" class="form-control" id="InputName" name="tenant[name]" placeholder="Tenant Name" value="<%=tenant.name%>">

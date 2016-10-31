@@ -29,7 +29,10 @@ router.route('/signup')
 
 router.route('/')
       .get(authCheck, function (req, res) {
-        res.render('login', {message: req.flash('loginMessage')})
+        res.render('login', {
+          message: req.flash('loginMessage'),
+          error: req.flash('errorMessage')
+        })
       })
       .post(passport.authenticate('local-login', {
         successRedirect: '/user',
